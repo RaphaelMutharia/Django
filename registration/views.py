@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+
+from registration.models import Student
+
 """
 def registration(request):
     return HttpResponse("Welcome to registration!")
@@ -25,3 +28,11 @@ def courses(request):
     template = loader.get_template('courses')
     return HttpResponse(template.render())
 
+def addstudent(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+
+    obj1 = Student(username=username, password=password, email=email)
+    obj1.save()
