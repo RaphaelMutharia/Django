@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
+
 
 from registration.models import Student
 
@@ -28,11 +31,13 @@ def courses(request):
     template = loader.get_template('courses')
     return HttpResponse(template.render())
 
+@csrf_exempt
 def addstudent(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        email = request.POST['email']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
 
     obj1 = Student(username=username, password=password, email=email)
     obj1.save()
+    return render(request, 'register.html')
