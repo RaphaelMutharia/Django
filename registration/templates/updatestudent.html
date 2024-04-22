@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    Emobilis Dashboard
+{% endblock %}
+
+{% block content %}
+
+
+
+    <!-- Left Column: Student Registration Form -->
+    <div class="container ml-2 p-4 col-md-6" >
+      <u><h3 class="bg-dark text-white p-1 text-center">Update Student Details </h3></u>
+
+          <form method="POST" action="/updatestudent/{{ data.id }}" style="background-color:darkseagreen;padding:10px;" >
+              {% csrf_token %}
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" name="username" value="{{ data.username }}" id="name" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" name="email" value="{{ data.email }}" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+              <label for="Password" class="form-label">Password</label>
+              <input type="text" class="form-control" name="password" value="{{ data.Password }}" id="Password" placeholder="Enter your Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary m-1">Update</button>
+          </form>
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+  Emobilis Dashboard
+{% endblock %}
+{% block content %}
+
+    <div class="col-md-7" style="border-right: 1px solid red;padding:10px;">
+      <u><h3 class="bg-dark text-white text-center p-1">Registered Students</h3></u>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for student in data %}
+            <tr>
+                <td>{{ student.username }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.password }}</td>
+                <td>
+                     <a href="/editstudent/{{ student.id }}" type="button" class="btn btn-outline-success">Edit</a>
+                </td>
+                <td>
+                     <a href="/deletestudent/{{ student.id }}" type="button" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}

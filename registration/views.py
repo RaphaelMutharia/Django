@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
+from .models import Student
+
 
 
 from registration.models import Student
@@ -40,4 +42,34 @@ def addstudent(request):
 
     obj1 = Student(username=username, password=password, email=email)
     obj1.save()
-    return render(request, 'register.html')
+
+
+    data = Student.objects.all()
+    context = {'data': data}
+    return render(request, 'dashboard.html', context)
+def editstudent(request,id):
+    data = Student.objects.get(id=id)
+    context = {'data': data}
+    return render(request, 'updatestudent.html', context)
+def updatestudent(request, id):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+    editstudent = Student.objects.get(id=id)
+    editstudent.username = username
+    editstudent.email= email
+    editstudent.password= password
+
+    editstudent.save()
+    return redirect('/dashboard')
+
+def dashboard(request):
+    data = Student.objects.all()
+    context = {'data': data}
+    return render(request, 'dashboard.html', context)
+
+def deletestudent(request, id):
+   deletestudent=Student.objects.get(id=id)
+   deletestudent.delete()
+   return redirect('/dashboard')

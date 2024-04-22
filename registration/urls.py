@@ -10,6 +10,9 @@ urlpatterns = [
     path('register/', views.register, name='myregister'),
     path('addstudent', views.addstudent, name='addstudent'),
 
-    path('addstudent', views.addstudent, name='addingstudent')
-
+    path('addstudent', views.addstudent, name='addingstudent'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('deletestudent/<id>', views.deletestudent, name='deletestudent'),
+    path('editstudent/<id>', views.editstudent, name='editingstudent'),
+    path('updatestudent/<id>', views.updatestudent, name='updatingstudent')
 ]
