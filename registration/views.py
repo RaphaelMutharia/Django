@@ -3,7 +3,13 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from .models import Student
+from .forms import CourseForm
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
 
 
 
@@ -30,7 +36,7 @@ def about(request):
     template = loader.get_template('about.html')
     return HttpResponse(template.render())
 def courses(request):
-    template = loader.get_template('courses')
+    template = loader.get_template('courses.html')
     return HttpResponse(template.render())
 
 @csrf_exempt
@@ -73,3 +79,14 @@ def deletestudent(request, id):
    deletestudent=Student.objects.get(id=id)
    deletestudent.delete()
    return redirect('/dashboard')
+
+def create_course(request):
+    if request.method == 'POST':
+      form = CourseForm(request.POST)
+      if form.is_valid():
+        form.save()
+        # Redirect to a success page
+        return redirect('success')
+    else:
+      form = CourseForm()
+    return render(request, 'create_course.html', {'form': form})
